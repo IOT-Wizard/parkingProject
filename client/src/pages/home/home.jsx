@@ -1,8 +1,7 @@
 import React from "react";
 import "./home.scss";
 
-c
-onst Home = () => {
+const Home = () => {
     return (
       <div className='home'>
        Home page
