@@ -1,11 +1,12 @@
 import "./app.scss";
 
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import React from "react";
+//import React from "react";
 /*import Navbar from "./components/navbar/Navbar";*/
 import Home from "./pages/home/Home";
 /*import Footer from "./components/footer/footer";*/
 import SignUp from "./pages/signUp/signUp";
+import SignIn from "./pages/signIn/signIn";
 
 
 function App() {
@@ -31,6 +32,10 @@ function App() {
         {
           path: "/signup",
           element: <SignUp />,
+        },
+        {
+          path: "/signin",
+          element: <SignIn />,
         },
       ],
     }
