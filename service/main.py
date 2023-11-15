@@ -21,7 +21,7 @@ cursor.execute(create_subscription_table)
 mydb.commit()
 
 # Members API Route
-@app.route("/")
+@app.route("/memebrers")
 def members():
     return {"members": ["Member1", "Member2", "Member3"]}
 
