@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import { Button, Checkbox, Form, Input, Card} from 'antd';
+//import React, {useState} from "react";
+import { Button, Checkbox, Form, Input} from 'antd';
 import './signUp.scss'
 
 
@@ -23,19 +23,7 @@ const SignUp = () => {
                 
             }}
             >
-                <Card
-            style={{
-                
-                width:550,
-                height:'100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '100vh', // Adjust the height as needed
-                transform:"translateX(-5%) translateY(15%)",
-                
-            }}
-            >
+        
             <Form
             name="basic"
             labelCol={{
@@ -54,7 +42,14 @@ const SignUp = () => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
-        >
+        ><h2
+        style={{
+            alignItems:'center',
+            transform:"translateX(60%) translateY(-60%)",
+            fontSize:25,
+            
+        }}
+        >Sign Up</h2>
             <Form.Item 
             label="Full Name"
             name="Full Name"
@@ -136,7 +131,6 @@ const SignUp = () => {
                 </div>
             </Form.Item>
         </Form>
-        </Card>
         </div>
         
 
