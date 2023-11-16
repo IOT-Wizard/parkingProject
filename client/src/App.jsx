@@ -7,6 +7,7 @@ import Home from "./pages/home/Home";
 /*import Footer from "./components/footer/footer";*/
 import SignUp from "./pages/signUp/signUp";
 import SignIn from "./pages/signIn/signIn";
+import Profile from "./pages/profile/profile";
 
 
 function App() {
@@ -36,6 +37,10 @@ function App() {
         {
           path: "/signin",
           element: <SignIn />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
         },
       ],
     }

@@ -1,53 +1,85 @@
-import { Button, Checkbox, Form, Input} from 'antd';
+import { useState } from 'react';
+import { Button, Checkbox, Form, Input } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-const onFinish = (values) => {
-    console.log('Success:', values);
-  };
+const SignIn = () => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); 
+
+  const onFinish = async (values) => {
+    setLoading(true);
+  
+    try {
+      const response = await fetch('http://127.0.0.1:5000/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });   
+  
+      const data = await response.json(); // Move this line here
+  
+      if (response.ok) {
+        console.log('Success:', data);
+        // Handle successful login, e.g., redirect to another page
+        navigate('/profile');
+      } else {
+        console.log('Failed:', data.message); // Change errorData to data
+        // Handle failed login, e.g., display an error message
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    };
+  
+}
+
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
 
-const SignIn = () => {
-    return(
-        
-        <div
-        style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '100vh', // Adjust the height as needed
-            transform:"translateX(-5%) translateY(15%)",
-            
-        }}
-        >
-        
-        <Form
+  return (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        transform: 'translateX(-5%) translateY(15%)',
+      }}
+    >
+      <Form
         name="basic"
         labelCol={{
-        span: 8,
+          span: 8,
         }}
         wrapperCol={{
-        span: 16,
+          span: 16,
         }}
         style={{
-            maxWidth: 600,
-        width: '100%', // Ensure the form takes the full width
+          maxWidth: 600,
+          width: '100%',
         }}
         initialValues={{
-        remember: true,
+          remember: true,
         }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
-    ><h2
-        style={{
-            alignItems:'center',
-            transform:"translateX(60%) translateY(-60%)",
-            fontSize:25,
-            
-        }}
-    >Login</h2>
+      >
+        <h2
+          style={{
+            alignItems: 'center',
+            transform: 'translateX(60%) translateY(-60%)',
+            fontSize: 25,
+          }}
+        >
+          Login
+        </h2>
 
+       
         <Form.Item
         label="Username"
         name="username"
@@ -89,35 +121,37 @@ const SignIn = () => {
         }}
         >Remember me</Checkbox>
         </Form.Item>
-    
+
         <Form.Item
-        wrapperCol={{
+          wrapperCol={{
             offset: 8,
             span: 16,
-        }}
+          }}
         >
-            <div
+          <div
             style={{
-                height:200,
-                position: 'relative',
+              height: 200,
+              position: 'relative',
             }}
-            >
-            <Button type="primary" htmlType="submit"
-            style={{
+          >
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+              style={{
                 margin: 0,
-                position:"absolute",
-                top:'1%',
-                transform:"translateX(200%)",
-                
-            }}
+                position: 'absolute',
+                top: '1%',
+                transform: 'translateX(200%)',
+              }}
             >
-                Submit
+              Submit
             </Button>
-            </div>
+          </div>
         </Form.Item>
-    </Form>
-    </div> 
-)
-}
+      </Form>
+    </div>
+  );
+};
 
-export default SignIn
+export default SignIn;

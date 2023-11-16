@@ -1,6 +1,8 @@
-from flask import Flask, jsonify, request 
+from flask import Flask, jsonify, request, session 
 import mysql.connector
 from tables import create_user_table , create_cars_table , create_parking_history_table , create_subscription_table
+from flask_cors import CORS
+
 
 mydb = mysql.connector.connect(
     host="127.0.0.1",
@@ -10,7 +12,7 @@ mydb = mysql.connector.connect(
 )
 
 app = Flask(__name__)
-
+CORS(app)
 cursor = mydb.cursor()
 
 cursor.execute(create_user_table)
@@ -29,7 +31,7 @@ def members():
 
 
 
-@app.route("/login", methods=["POST"])
+@app.route("/signin", methods=["POST"])
 def login():
     data = request.get_json()
     username = data.get("username")
@@ -72,6 +74,35 @@ def signup():
     mydb.commit()
 
     return jsonify({"message": "Signup successful"}), 201  # 201 Created
+
+@app.route("/rapport", methods=["GET"])
+def rapport():
+    # Assurez-vous que l'utilisateur est connecté
+    if 'user_id' not in session:
+        return jsonify({"message": "Utilisateur non connecté"}), 401  # Unauthorized
+
+    user_id = session['user_id']
+
+    query = """
+        SELECT c.car_id, h.event, h.timestamp
+        FROM parking_history h
+        JOIN cars c ON h.car_id = c.car_id
+        JOIN users u ON c.car_owner_id = u.user_id
+        WHERE u.user_id = %s;
+    """
+
+    # Exécutez la requête
+    cursor.execute(query, (user_id,))
+    result = cursor.fetchall()
+
+    # Transformez les résultats en un format JSON
+    rapport_json = [{"car_id": row[0], "event": row[1], "timestamp": row[2]} for row in result]
+
+    # Renvoyez la réponse JSON
+    return jsonify(rapport_json)
+
+
+
 
 
 if __name__ == "__main__": 
