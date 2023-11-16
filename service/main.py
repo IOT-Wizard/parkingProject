@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request 
 import mysql.connector
 from tables import create_user_table , create_cars_table , create_parking_history_table , create_subscription_table
+from flask_cors import CORS
+
 
 mydb = mysql.connector.connect(
     host="127.0.0.1",
@@ -10,7 +12,7 @@ mydb = mysql.connector.connect(
 )
 
 app = Flask(__name__)
-
+CORS(app)
 cursor = mydb.cursor()
 
 cursor.execute(create_user_table)
@@ -29,7 +31,7 @@ def members():
 
 
 
-@app.route("/login", methods=["POST"])
+@app.route("/signin", methods=["POST"])
 def login():
     data = request.get_json()
     username = data.get("username")

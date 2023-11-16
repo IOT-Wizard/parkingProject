@@ -37,6 +37,10 @@ function App() {
           path: "/signin",
           element: <SignIn />,
         },
+        {
+          path: "/profile",
+          element: <Profile />,
+        },
       ],
     }
   ]);
