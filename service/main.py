@@ -90,7 +90,8 @@ def rapport():
         JOIN users u ON c.car_owner_id = u.user_id
         WHERE u.user_id = %s;
     """
-
+    
+    #cursor.execute(query, (user_id,))
     # Exécutez la requête
     cursor.execute(query, (user_id,))
     result = cursor.fetchall()
