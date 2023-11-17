@@ -17,7 +17,7 @@ const Home = () => {
         {/* Add featured parking spaces */}
       </section>
       {/* Add more sections as needed */}
-      <img src="./public/img/parking.jpg" alt="" />
+      <img src="./img/parking.jpg" alt="" />
    </div>
 
    )

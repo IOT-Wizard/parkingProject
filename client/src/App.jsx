@@ -1,5 +1,4 @@
 import "./app.scss";
-import { ChakraProvider } from "@chakra-ui/react";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 //import React from "react";
 import Navbar from "./components/navbar/Navbar";
@@ -8,18 +7,18 @@ import SignUp from "./pages/signUp/signUp";
 import SignIn from "./pages/signIn/signIn";
 import Profile from "./pages/profile/profile";
 import Rapport from "./pages/rapport/rapport";
+import Home from "./pages/home/home";
 
 
 function App() {
   const Layout = () => {
     return (
-      <ChakraProvider>
       <div className="app">
         <Navbar/>
         <Outlet />
        
       </div>
-      </ChakraProvider>) ;
+  ) ;
   };
 
   const router = createBrowserRouter([
@@ -30,7 +29,7 @@ function App() {
       children: [
         {
           path: "/",
-          //element: <Home />,
+          element: <Home />,
         },
         {
           path: "/signup",
@@ -42,7 +41,7 @@ function App() {
         },
         {
           path: "/profile",
-         // element: <Profile />,
+          element: <Profile />,
         },
         {
           path: "/rapport",
