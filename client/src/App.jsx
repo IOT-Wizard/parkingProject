@@ -6,7 +6,8 @@ import Navbar from "./components/navbar/Navbar";
 /*import Footer from "./components/footer/footer";*/
 import SignUp from "./pages/signUp/signUp";
 import SignIn from "./pages/signIn/signIn";
-import Home from "./pages/home/home";
+import Profile from "./pages/profile/profile";
+import Rapport from "./pages/rapport/rapport";
 
 
 function App() {
@@ -42,6 +43,10 @@ function App() {
         {
           path: "/profile",
          // element: <Profile />,
+        },
+        {
+          path: "/rapport",
+          element: <Rapport />,
         },
       ],
     }

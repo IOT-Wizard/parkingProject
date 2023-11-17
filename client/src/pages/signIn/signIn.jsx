@@ -10,18 +10,17 @@ const SignIn = () => {
     setLoading(true);
   
     try {
-      const response = await fetch('http://127.0.0.1:5000/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });   
-  
+      const response = await fetch('http://127.0.0.1:5000/signin', { method: 'POST',  headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'http://localhost:5173',  // Ajoutez cette ligne
+      }, body: JSON.stringify(values), });   
       const data = await response.json(); // Move this line here
   
       if (response.ok) {
-        console.log('Success:', data);
+        localStorage.setItem("currentUser", JSON.stringify(data.user));
+        console.log('Success:',data);
+        console.log('ID:',data.user.user_id);
+
         // Handle successful login, e.g., redirect to another page
         navigate('/profile');
       } else {
