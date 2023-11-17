@@ -8,6 +8,7 @@ import Home from "./pages/home/Home";
 import SignUp from "./pages/signUp/signUp";
 import SignIn from "./pages/signIn/signIn";
 import Profile from "./pages/profile/profile";
+import Rapport from "./pages/rapport/rapport";
 
 
 function App() {
@@ -41,6 +42,10 @@ function App() {
         {
           path: "/profile",
           element: <Profile />,
+        },
+        {
+          path: "/rapport",
+          element: <Rapport />,
         },
       ],
     }
