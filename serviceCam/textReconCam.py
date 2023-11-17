@@ -1,5 +1,3 @@
-#text detection from a camera
-
 import pytesseract
 import cv2
 
@@ -16,11 +14,20 @@ while True:
     if (counter % 20) == 0:
         imgH, imgW, _ = frame.shape
 
-        x1, y1, w1, h1 = 0, 0, imgW, imgH  # Corrected the order of dimensions
+        # Corrected the order of dimensions
+        x1, y1, w1, h1 = 0, 0, imgW, imgH  
 
-        imgchar = pytesseract.image_to_string(frame)
+        # Convert the frame to grayscale for better text detection
+        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        imgboxes = pytesseract.image_to_boxes(frame)
+        # Perform adaptive thresholding to binarize the image
+        _, thresh = cv2.threshold(gray_frame, 150, 255, cv2.THRESH_BINARY)
+
+        # Use the binarized image for text extraction
+        imgchar = pytesseract.image_to_string(thresh)
+
+        # Use the binarized image for box detection
+        imgboxes = pytesseract.image_to_boxes(thresh)
 
         for boxes in imgboxes.splitlines():
             boxes = boxes.split(' ')
@@ -43,4 +50,3 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
-
