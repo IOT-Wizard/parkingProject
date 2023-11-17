@@ -38,9 +38,7 @@ const Navbar = () => {
             <a href="#price" className="link">
               <span>Pricing</span>
             </a>
-            <a href="#ab" className="link">
-              <span>About</span>
-            </a>
+
             <Link to="/" className="link">
               <button className={active ? 'active' : ''}>Sign In</button>
             </Link>

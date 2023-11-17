@@ -2,21 +2,22 @@ import "./app.scss";
 
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 //import React from "react";
-/*import Navbar from "./components/navbar/Navbar";*/
+import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/home/Home";
-/*import Footer from "./components/footer/footer";*/
+import Footer from "./components/footer/footer";
 import SignUp from "./pages/signUp/signUp";
 import SignIn from "./pages/signIn/signIn";
 import Profile from "./pages/profile/profile";
 import Rapport from "./pages/rapport/rapport";
-
+import Subscribe from "./pages/Subscribe/Subscribe"
 
 function App() {
   const Layout = () => {
     return (
       <div className="app">
-        
+        <Navbar/>
         <Outlet />
+        <Footer />
        
       </div>
     );
@@ -46,6 +47,9 @@ function App() {
         {
           path: "/rapport",
           element: <Rapport />,
+        },{
+          path: "/abonnement",
+          element: <Subscribe />,
         },
       ],
     }

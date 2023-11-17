@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask, jsonify, request, session 
 import mysql.connector
 from tables import create_user_table , create_cars_table , create_parking_history_table , create_subscription_table
@@ -131,6 +132,35 @@ def rapport(user_id):
 
     return jsonify(rapport_json)
 
+
+@app.route("/subscribe/<int:user_id>", methods=["POST"])
+def subscribe(user_id):
+    data = request.get_json()
+    car_id = data.get("car_id")
+    end_date_str = data.get("end_date")
+
+    # Check if the car already exists
+    check_query = "SELECT * FROM cars WHERE car_id = %s"
+    cursor.execute(check_query, (car_id,))
+    existing_car = cursor.fetchone()
+
+    if existing_car:
+        return jsonify({"message": "Car already exists"}), 400  # Bad Request
+
+    # Insert the car into the "cars" table
+    insert_car_query = "INSERT INTO cars (car_id, car_owner_id) VALUES (%s, %s)"
+    cursor.execute(insert_car_query, (car_id, user_id))
+
+    # Parse the end_date string to a datetime object
+    end_date = datetime.datetime.strptime(end_date_str, "%Y-%m-%d")
+
+    # Insert the subscription into the "subscriptions" table
+    insert_subscription_query = "INSERT INTO subscription (car_id, end_date) VALUES (%s, %s)"
+    cursor.execute(insert_subscription_query, (car_id, end_date))
+
+    mydb.commit()
+
+    return jsonify({"message": "Subscription successful"}), 201  # Created
 
 
 if __name__ == "__main__": 
