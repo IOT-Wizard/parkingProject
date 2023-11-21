@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const { pathname } = useLocation();
-
+  
   const [active, setActive] = useState(false);
   const isActive = () => {
     window.scrollY > 0 ? setActive(true) : setActive(false);
@@ -39,10 +39,10 @@ const Navbar = () => {
               <span>Pricing</span>
             </a>
 
-            <Link to="/" className="link">
+            <Link to="/signin" className="link">
               <button className={active ? 'active' : ''}>Sign In</button>
             </Link>
-            <Link to="/" className="link">
+            <Link to="/signup" className="link">
               <button className={active ? 'active' : ''}>Sign Up</button>
             </Link>
           </div>
