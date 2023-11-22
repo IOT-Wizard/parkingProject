@@ -36,7 +36,31 @@ const Subscribe = () => {
   
 
   return (
-    <Form form={form} onFinish={onFinish} layout="vertical">
+    <div
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+      //transform: 'translateX(10%) translateY(-10%)',
+      alignContent:'center',
+      transform: 'translateX(10%)',
+    }}
+    >
+    <Form 
+    form={form} onFinish={onFinish} layout="vertical"
+    name="basic"
+        labelCol={{
+          span: 8,
+        }}
+        wrapperCol={{
+          span: 16,
+        }}
+        style={{
+          maxWidth: 600,
+          width: '100%',
+        }}
+    >
       <Form.Item
         name="car_id"
         label="Car ID"
@@ -48,11 +72,19 @@ const Subscribe = () => {
         <DatePicker style={{ width: '100%' }} />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" loading={loading}>
+        <Button type="primary" htmlType="submit" loading={loading}
+        style={{
+          margin: 0,
+          position: 'absolute',
+          top: '1%',
+          transform: 'translateX(170%)',
+        }}
+        >
           Subscribe
         </Button>
       </Form.Item>
     </Form>
+    </div>
   );
 };
 
