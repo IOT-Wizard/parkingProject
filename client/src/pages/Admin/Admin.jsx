@@ -9,7 +9,7 @@ const Admin = () => {
     <div style={{ padding: '20px' }}>
       <Card title={`Bienvenue, ${currentUser.username}`}>
         <Button type="primary" style={{ marginRight: '10px' }}>
-          <Link to="/">Rapport</Link>
+          <Link to="/rapport">Rapport</Link>
         </Button>
         <Button type="primary">
           <Link to="/addbadge">AddBadge</Link>

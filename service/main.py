@@ -185,9 +185,7 @@ def add_badge():
 
     if existing_card:
         return jsonify({"message": "Badge with this ID already exists"}), 400  # Bad Request
-        
-    insert_car_query = "INSERT INTO cars (car_id, car_owner_id) VALUES (%s, %s)"
-    cursor.execute(insert_car_query, (car_id, user_id))
+    
     # Parse the end_date string to a datetime object
     end_date = datetime.datetime.strptime(end_date_str, "%Y-%m-%d")
 
