@@ -9,17 +9,18 @@ import SignIn from "./pages/signIn/signIn";
 import Profile from "./pages/profile/profile";
 import Rapport from "./pages/rapport/rapport";
 import Subscribe from "./pages/Subscribe/Subscribe";
-import Admin from "./pages/admin/admin";
+import Admin from "./pages/Admin/Admin";
+
+import AddBadgeForm from "./pages/AddBadgeForm/AddBadgeForm";
 
 
 function App() {
   const Layout = () => {
     return (
       <div className="app">
-        <Navbar/>
+        <Navbar />
         <Outlet />
         <Footer />
-       
       </div>
   ) ;
   };
@@ -49,7 +50,8 @@ function App() {
         {
           path: "/rapport",
           element: <Rapport />,
-        },{
+        },
+        {
           path: "/abonnement",
           element: <Subscribe />,
         },{
@@ -58,10 +60,10 @@ function App() {
         },
       ],
     }
-    
   ]);
 
   return <RouterProvider router={router} />;
 }
 
 export default App;
+

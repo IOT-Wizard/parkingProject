@@ -5,6 +5,7 @@ from tables import create_user_table , create_cars_table , create_parking_histor
 from flask_cors import CORS
 
 
+
 mydb = mysql.connector.connect(
     host="127.0.0.1",
     user="root",
@@ -52,6 +53,7 @@ def login():
             "user_id": user[0],
             "full_name": user[1],
             "username": user[2],
+            "role":user[3],
         }
         session['user_id'] = user[0]
         # Authentication successful
@@ -78,8 +80,8 @@ def signup():
         return jsonify({"message": "Username already taken"}), 400  # 400 Bad Request
 
     # Insert the new user into the database
-    insert_query = "INSERT INTO users (full_name, username, password) VALUES (%s, %s, %s)"
-    cursor.execute(insert_query, (full_name, username, password))
+    insert_query = "INSERT INTO users (full_name, username, password,role) VALUES (%s, %s, %s,%s)"
+    cursor.execute(insert_query, (full_name, username, password,"user"))
     mydb.commit()
 
     return jsonify({"message": "Signup successful"}), 201  # 201 Created
@@ -172,7 +174,54 @@ def subscribe(user_id):
     mydb.commit()
 
     return jsonify({"message": "Subscription successful"}), 201  # Created
+@app.route("/admin")
+def admin_dashboard():
+    return jsonify({"message": "Welcome to the admin dashboard"})
 
+@app.route("/addbadge", methods=["POST"])
+
+def add_badge():
+    data = request.get_json()
+
+    car_id = data.get("car_id")
+    id_card = data.get("idCard")
+    end_date_str = data.get("end_date")
+    user_id = data.get("user_id")
+    end_date_str = data.get("end_date")
+
+    # Check if the idCard already exists
+    check_query = "SELECT * FROM subscription WHERE idCard = %s"
+    cursor.execute(check_query, (id_card,))
+    existing_card = cursor.fetchone()
+
+    if existing_card:
+        return jsonify({"message": "Badge with this ID already exists"}), 400  # Bad Request
+        
+    insert_car_query = "INSERT INTO cars (car_id, car_owner_id) VALUES (%s, %s)"
+    cursor.execute(insert_car_query, (car_id, user_id))
+    # Parse the end_date string to a datetime object
+    end_date = datetime.datetime.strptime(end_date_str, "%Y-%m-%d")
+
+    # Insert the subscription into the "subscription" table
+    insert_subscription_query = "INSERT INTO subscription (car_id, idCard, end_date) VALUES (%s, %s, %s)"
+    cursor.execute(insert_subscription_query, (car_id, id_card, end_date))
+
+    # Update the user's role to "Admin" (assuming user_id is the user you want to promote)
+    update_user_query = "UPDATE users SET role = %s WHERE user_id = %s"
+    cursor.execute(update_user_query, ("Admin", user_id))
+
+    mydb.commit()
+
+    return jsonify({"message": "Badge added successfully"}), 201  # Created
+
+@app.route("/getallusers", methods=["GET"])
+def get_all_users():
+    # Fetch all users from the database
+    query = "SELECT username FROM users"
+    cursor.execute(query)
+    users = [row[0] for row in cursor.fetchall()]
+
+    return jsonify({"users": users})
 
 if __name__ == "__main__": 
     app.run(debug=True, host="0.0.0.0", port=5000)
