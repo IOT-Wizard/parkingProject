@@ -1,5 +1,4 @@
 import "./app.scss";
-
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 //import React from "react";
 import Navbar from "./components/navbar/Navbar";
@@ -9,7 +8,8 @@ import SignUp from "./pages/signUp/signUp";
 import SignIn from "./pages/signIn/signIn";
 import Profile from "./pages/profile/profile";
 import Rapport from "./pages/rapport/rapport";
-import Subscribe from "./pages/Subscribe/Subscribe"
+import Subscribe from "./pages/subscribe/subscribe";
+
 
 function App() {
   const Layout = () => {
@@ -20,11 +20,12 @@ function App() {
         <Footer />
        
       </div>
-    );
+  ) ;
   };
 
   const router = createBrowserRouter([
     {
+
       path: "/",
       element: <Layout />,
       children: [
@@ -53,6 +54,7 @@ function App() {
         },
       ],
     }
+    
   ]);
 
   return <RouterProvider router={router} />;

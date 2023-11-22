@@ -17,10 +17,10 @@ app.secret_key = "key"
 CORS(app)
 cursor = mydb.cursor()
 
-cursor.execute(create_user_table)
-cursor.execute(create_cars_table)
-cursor.execute(create_parking_history_table)
-cursor.execute(create_subscription_table)
+# cursor.execute(create_user_table)
+# cursor.execute(create_cars_table)
+# cursor.execute(create_parking_history_table)
+# cursor.execute(create_subscription_table)
 
 mydb.commit()
 
@@ -163,5 +163,26 @@ def subscribe(user_id):
     return jsonify({"message": "Subscription successful"}), 201  # Created
 
 
+@app.route("/historique/<string:idCard>", methods=["POST"])
+def historique(idCard):
+    # Check if the idCard exists in the history table
+    check_query = "SELECT car_id , end_date FROM subscription WHERE idCard= %s"
+    cursor.execute(check_query, (idCard,))
+    car = cursor.fetchone()
+
+    if car:
+        car_data = {
+            "car_id":  car[0],
+            "end_date": car[1],
+        }
+        insert_query = "INSERT INTO parking_history (car_id, event) VALUES (%s ,%s)"
+        cursor.execute(insert_query, (car[0], "enter"))
+        mydb.commit()
+
+        return jsonify({"message": f"Car ID {car[0]} added to the history"}), 201  # Created
+    else:
+        return jsonify({"message": f"Car ID {idCard} not found in subscriptions"}), 404  # Not Found
+    
+    
 if __name__ == "__main__": 
     app.run(debug=True, host="0.0.0.0", port=5000)
