@@ -31,7 +31,7 @@ const SignIn = () => {
       console.error('Error:', error);
     } finally {
       setLoading(false);
-    };
+    }
   
 }
 

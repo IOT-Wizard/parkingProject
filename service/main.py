@@ -1,5 +1,5 @@
 import datetime
-from flask import Flask, jsonify, request, session 
+from flask import Flask, jsonify, request, session , make_response
 import mysql.connector
 from tables import create_user_table , create_cars_table , create_parking_history_table , create_subscription_table
 from flask_cors import CORS
@@ -83,6 +83,17 @@ def signup():
     mydb.commit()
 
     return jsonify({"message": "Signup successful"}), 201  # 201 Created
+
+'''@app.route('/test', methods=['GET'])
+def test():
+    return jsonify({"name" : "maroua"})'''
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    print("test")
+     # Clear the session
+    session.clear()
+    return "User has been logged out."
 
 # @app.route("/rapport/<int:user_id>", methods=["GET"])
 # def rapport():
