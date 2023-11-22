@@ -16,6 +16,7 @@ mydb = mysql.connector.connect(
 app = Flask(__name__)
 app.secret_key = "key" 
 CORS(app)
+
 cursor = mydb.cursor()
 
 cursor.execute(create_user_table)
