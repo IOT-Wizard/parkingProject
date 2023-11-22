@@ -3,7 +3,8 @@ create_user_table = """
         user_id INT AUTO_INCREMENT PRIMARY KEY,
         full_name VARCHAR(100) NOT NULL,
         username VARCHAR(100) NOT NULL,
-        password VARCHAR(100) NOT NULL
+        password VARCHAR(100) NOT NULL,
+        role VARCHAR(50) NOT NULL DEFAULT 'user'
     )
 """
 
@@ -39,6 +40,7 @@ create_subscription_table = """
     CREATE TABLE IF NOT EXISTS subscription (
         subscription_id INT AUTO_INCREMENT PRIMARY KEY,
         car_id VARCHAR(50),
+        idCard VARCHAR(122) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         end_date TIMESTAMP,
         CONSTRAINT check_end_date_gt_start_date CHECK (end_date > created_at),
