@@ -9,6 +9,11 @@ font = cv2.FONT_HERSHEY_PLAIN
 
 cap = cv2.VideoCapture(0)
 
+@app.route('/camera')
+def index():
+ """Video streaming home page."""
+ return render_template('test.html')
+
 def generate_frames():
     counter = 0
     while True:
@@ -47,7 +52,7 @@ def generate_frames():
             print(imgchar)
 
             # Save the frame as an image
-            cv2.imwrite('serviceCam/img/detected_text_image.jpg', frame)
+            #cv2.imwrite('serviceCam/img/detected_text_image.jpg', frame)
 
             if cv2.waitKey(2) & 0xFF == ord('q'):
                 break
@@ -61,5 +66,5 @@ def generate_frames():
 def video_feed():
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+ app.run(host='0.0.0.0', port =5000, debug=True, threaded=True)
