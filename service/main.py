@@ -19,10 +19,10 @@ CORS(app)
 
 cursor = mydb.cursor()
 
-# cursor.execute(create_user_table)
-# cursor.execute(create_cars_table)
-# cursor.execute(create_parking_history_table)
-# cursor.execute(create_subscription_table)
+cursor.execute(create_user_table)
+cursor.execute(create_cars_table) 
+cursor.execute(create_parking_history_table)
+cursor.execute(create_subscription_table)
 
 mydb.commit()
 

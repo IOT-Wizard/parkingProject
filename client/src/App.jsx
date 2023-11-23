@@ -1,27 +1,29 @@
 import "./app.scss";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { ChakraProvider } from '@chakra-ui/react';
 //import React from "react";
 import Navbar from "./components/navbar/navbar";
-import Home from "./pages/home/Home";
 import Footer from "./components/footer/footer";
 import SignUp from "./pages/signUp/signUp";
 import SignIn from "./pages/signIn/signIn";
 import Profile from "./pages/profile/profile";
 import Rapport from "./pages/rapport/rapport";
 import Subscribe from "./pages/Subscribe/Subscribe";
-import Admin from "./pages/Admin/Admin";
-
+import Home from "./pages/home/home";
+import Admin from "./pages/admin/admin";
 import AddBadgeForm from "./pages/AddBadgeForm/AddBadgeForm";
 
 
 function App() {
   const Layout = () => {
     return (
-      <div className="app">
-        <Navbar />
-        <Outlet />
-        <Footer />
-      </div>
+      //<div className="app">
+        <ChakraProvider>
+          <Navbar />
+          <Outlet />
+          <Footer />
+        </ChakraProvider>
+      //</div>
   ) ;
   };
 
@@ -57,6 +59,9 @@ function App() {
         },{
           path: "/admin",
           element: <Admin />,
+        },{
+          path: "/addbadge",
+          element: <AddBadgeForm />,
         },
       ],
     }

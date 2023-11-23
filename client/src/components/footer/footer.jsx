@@ -37,7 +37,6 @@ const Footer = () => {
     <ul className="menu">
         <li className="menu__item"><a className="menu__link" href="#feat">Home</a></li>
         <li className="menu__item"><a className="menu__link" href="#ab">About</a></li>
-        <li className="menu__item"><a className="menu__link" href="#price">Pricing</a></li>
     </ul>
 
     <p>&copy;2023 <span className='logoo'><strong>Parking</strong></span>   | All Rights Reserved</p>
