@@ -21,8 +21,15 @@ const SignIn = () => {
         console.log('Success:',data);
         console.log('ID:',data.user.user_id);
 
-        // Handle successful login, e.g., redirect to another page
-        navigate('/profile');
+        // Check the user's role and navigate accordingly
+        if (data.user.role.toLowerCase() === 'admin') {
+          console.log('Navigating to /admin');
+          navigate('/admin');
+        } else {
+          console.log('Navigating to /profile');
+          navigate('/profile');
+        }
+        
       } else {
         console.log('Failed:', data.message); // Change errorData to data
         // Handle failed login, e.g., display an error message
