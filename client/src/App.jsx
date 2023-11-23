@@ -10,7 +10,7 @@ import Profile from "./pages/profile/profile";
 import Rapport from "./pages/rapport/rapport";
 import Subscribe from "./pages/Subscribe/Subscribe";
 import Home from "./pages/home/home";
-import Admin from "./pages/admin/admin";
+import Admin from "./pages/Admin/Admin";
 import AddBadgeForm from "./pages/AddBadgeForm/AddBadgeForm";
 
 
