@@ -33,9 +33,6 @@ def members():
     return {"members": ["Member1", "Member2", "Member3"]}
 
 
-
-
-
 @app.route("/signin", methods=["POST"])
 def login():
     data = request.get_json()
@@ -65,7 +62,6 @@ def login():
         return jsonify({"message": "Invalid credentials"}), 401
 
 
-
 @app.route("/signup", methods=["POST"])
 def signup():
     data = request.get_json()
@@ -87,6 +83,7 @@ def signup():
     mydb.commit()
 
     return jsonify({"message": "Signup successful"}), 201  # 201 Created
+
 
 '''@app.route('/test', methods=['GET'])
 def test():
@@ -247,6 +244,8 @@ def historique(idCard):
     else:
         return jsonify({"message": f"Car ID {idCard} not found in subscriptions"}), 404  # Not Found
     
+    
+
     
 if __name__ == "__main__": 
     app.run(debug=True, host="0.0.0.0", port=5000)
