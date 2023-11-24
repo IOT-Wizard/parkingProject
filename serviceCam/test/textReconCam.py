@@ -32,7 +32,8 @@ while True:
         for boxes in imgboxes.splitlines():
             boxes = boxes.split(' ')
             x, y, w, h = int(boxes[1]), int(boxes[2]), int(boxes[3]), int(boxes[4])
-            cv2.rectangle(frame, (x, imgH - y), (w, imgH - h), (0, 0, 255), 3)
+            # Change the color parameter to None or another color (e.g., (255, 255, 255) for white)
+            cv2.rectangle(frame, (x, imgH - y), (w, imgH - h), None, 3)
 
         cv2.putText(frame, imgchar, (x1 + int(w1 / 50), y1 + int(h1 / 50)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
 
@@ -42,8 +43,6 @@ while True:
         print("Detected Text:")
         print(imgchar)
 
-        # Save the frame as an image
-        cv2.imwrite('serviceCam/img/detected_text_image.jpg', frame)
 
         if cv2.waitKey(2) & 0xFF == ord('q'):
             break

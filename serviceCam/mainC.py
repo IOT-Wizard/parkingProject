@@ -1,25 +1,20 @@
-from flask import Flask
-import pytesseract
+from flask import Flask, render_template, Response, jsonify
 import cv2
-import threading
-from datetime import datetime
-import mysql.connector
+import pytesseract
 
 app = Flask(__name__)
 
-# Configure your MySQL database connection
-db_config = {
-    'host': '127.0.0.1',
-    'user': 'root',
-    'password': '0802',
-    'database': 'parking'
-}
+font_scale = 1.5
+font = cv2.FONT_HERSHEY_PLAIN
 
-# Function to handle text detection
-def perform_text_detection():
-    # Open the webcam
-    cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0)
 
+@app.route('/camera')
+def index():
+ """Video streaming home page."""
+ return render_template('test.html')
+
+def generate_frames():
     counter = 0
     while True:
         ret, frame = cap.read()
@@ -27,19 +22,17 @@ def perform_text_detection():
         if (counter % 20) == 0:
             imgH, imgW, _ = frame.shape
 
-            x1, y1, w1, h1 = 0, 0, imgW, imgH
-            gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            _, thresh = cv2.threshold(gray_frame, 150, 255, cv2.THRESH_BINARY)
-            imgchar = pytesseract.image_to_string(thresh)
+            # Corrected the order of dimensions
+            x1, y1, w1, h1 = 0, 0, imgW, imgH  
 
-            # Insert the detected text into the 'cars' table
-            query = "INSERT INTO cars (detected_text, car_owner_id) VALUES (%s, %s)"
-            values = (imgchar, 1)  # Assuming car_owner_id is 1 for this example
-            try:
-                cursor.execute(query, values)
-                conn.commit()
-            except mysql.connector.Error as err:
-                print(f"Error: {err}")
+            # Convert the frame to grayscale for better text detection
+            gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+            # Perform adaptive thresholding to binarize the image
+            _, thresh = cv2.threshold(gray_frame, 150, 255, cv2.THRESH_BINARY)
+
+            # Use the binarized image for text extraction
+            imgchar = pytesseract.image_to_string(thresh)
 
             # Use the binarized image for box detection
             imgboxes = pytesseract.image_to_boxes(thresh)
@@ -47,10 +40,10 @@ def perform_text_detection():
             for boxes in imgboxes.splitlines():
                 boxes = boxes.split(' ')
                 x, y, w, h = int(boxes[1]), int(boxes[2]), int(boxes[3]), int(boxes[4])
-                cv2.rectangle(frame, (x, imgH - y), (w, imgH - h), (0, 0, 255), 3)
+                # Change the color parameter to None or another color (e.g., (255, 255, 255) for white)
+                cv2.rectangle(frame, (x, imgH - y), (w, imgH - h), None, 3)
 
-            cv2.putText(frame, imgchar, (x1 + int(w1 / 50), y1 + int(h1 / 50)), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-                        (255, 0, 0), 2)
+            cv2.putText(frame, imgchar, (x1 + int(w1 / 50), y1 + int(h1 / 50)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
 
             cv2.imshow('Text Detection Tutorial', frame)
 
@@ -59,29 +52,19 @@ def perform_text_detection():
             print(imgchar)
 
             # Save the frame as an image
-            cv2.imwrite('serviceCam/img/detected_text_image.jpg', frame)
+            #cv2.imwrite('serviceCam/img/detected_text_image.jpg', frame)
 
             if cv2.waitKey(2) & 0xFF == ord('q'):
                 break
-
-    # Close the webcam, release the database connection
+            
     cap.release()
-    cursor.close()
-    conn.close()
+    cv2.destroyAllWindows()
 
-# Your text detection route
-@app.route('/detection')
-def detect_text():
-    # Start the text detection in a separate thread
-    detection_thread = threading.Thread(target=perform_text_detection)
-    detection_thread.start()
 
-    return "Text detection started!"
 
-if __name__ == "__main__":
-    # Establish a MySQL connection
-    conn = mysql.connector.connect(**db_config)
-    cursor = conn.cursor()
+@app.route('/video_feed')
+def video_feed():
+    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-    # Run the Flask app in debug mode on 0.0.0.0:5000
-    app.run(debug=True, host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+   app.run(host='0.0.0.0', port =5000, debug=True, threaded=True)

@@ -31,7 +31,10 @@ const SignUp = () => {
         // Handle failed signup, e.g., display an error message
       }
     } catch (error) {
-      console.error('Error:', error);
+      //console.error('Error:', error);
+      console.error('Error during signup:', error);
+      // Log the specific details of the error
+      console.error('Error details:', error.message, error.response);
     } finally {
       setLoading(false);
     }

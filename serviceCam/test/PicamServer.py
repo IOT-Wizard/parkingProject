@@ -2,7 +2,7 @@ from flask import Flask, render_template, Response
 import cv2
 app = Flask(__name__)
 #app.config["CACHE_TYPE"] = "null"
-@app.route('/')
+@app.route('/camera')
 def index():
  """Video streaming home page."""
  return render_template('index.html')

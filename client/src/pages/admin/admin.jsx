@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React from 'react';
+=======
+//import React from 'react';
+>>>>>>> fe4db40b8a12aa075910be8b0f3a9a77710e873c
 import { Button, Card } from 'antd';
 import { Link } from 'react-router-dom';
 

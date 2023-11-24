@@ -10,12 +10,12 @@ const Footer = () => {
   return (
     <div className= {pathname =="/" ? " " :"h hide"}>
         <footer className="footer">
-    <div className="waves">
+    {/* <div className="waves"> 
       <div className="wave" id="wave1"></div>
       <div className="wave" id="wave2"></div>
       <div className="wave" id="wave3"></div>
       <div className="wave" id="wave4"></div>
-    </div>
+    </div>*/}
     <ul className="social-icon">
         <li className="social-icon__item">
           <a className="social-icon__link" href="https://github.com/marua15">
@@ -37,7 +37,6 @@ const Footer = () => {
     <ul className="menu">
         <li className="menu__item"><a className="menu__link" href="#feat">Home</a></li>
         <li className="menu__item"><a className="menu__link" href="#ab">About</a></li>
-        <li className="menu__item"><a className="menu__link" href="#price">Pricing</a></li>
     </ul>
 
     <p>&copy;2023 <span className='logoo'><strong>Parking</strong></span>   | All Rights Reserved</p>
