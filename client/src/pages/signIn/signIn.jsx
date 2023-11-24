@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, Card } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import {Card, Space} from 'antd';
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -47,7 +46,10 @@ const SignIn = () => {
     console.log('Failed:', errorInfo);
   };
 
-  return (
+
+  const [isCardHovered, setIsCardHovered] = useState(false);
+
+  return ( 
     <div
       style={{
         display: 'flex',
@@ -57,6 +59,14 @@ const SignIn = () => {
         transform: 'translateX(-5%) translateY(15%)',
       }}
     >
+       <Card  style={{ maxWidth: 550, width: '100%', 
+         background: isCardHovered ? '#f8f9fa' : '#ffffff', // Change card background on hover
+         transition: 'background-color 0.3s', // Smooth transition for the card background color
+         transform: 'translateX(10%) translateY(-5%)',
+       }}
+       onMouseEnter={() => setIsCardHovered(true)} // Set hover state on mouse enter
+       onMouseLeave={() => setIsCardHovered(false)} // Reset hover state on mouse leave
+       >
       <Form
         name="basic"
         labelCol={{
@@ -68,6 +78,7 @@ const SignIn = () => {
         style={{
           maxWidth: 600,
           width: '100%',
+          transform: 'translateX(-10%) translateY(20%)',
         }}
         initialValues={{
           remember: true,
@@ -79,8 +90,9 @@ const SignIn = () => {
         <h2
           style={{
             alignItems: 'center',
-            transform: 'translateX(60%) translateY(-60%)',
-            fontSize: 25,
+            transform: 'translateX(54%) translateY(-100%)',
+            fontSize: 30,
+            fontFamily:'sans-serif'
           }}
         >
           Login
@@ -124,7 +136,7 @@ const SignIn = () => {
         <Checkbox
         style={{
             textAlign:'center',
-            transform:"translateX(100%)",
+            transform:"translateX(70%)",
         }}
         >Remember me</Checkbox>
         </Form.Item>
@@ -149,7 +161,7 @@ const SignIn = () => {
                 margin: 0,
                 position: 'absolute',
                 top: '1%',
-                transform: 'translateX(200%)',
+                transform: 'translateX(150%)',
               }}
             >
               Submit
@@ -157,7 +169,10 @@ const SignIn = () => {
           </div>
         </Form.Item>
       </Form>
-    </div>
+      </Card>
+      
+    </div> 
+  
   );
 };
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, Card  } from 'antd';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from React Router
 import './signUp.scss';
 
@@ -44,6 +44,8 @@ const SignUp = () => {
     console.log('Failed:', errorInfo);
   };
 
+  const [isCardHovered, setIsCardHovered] = useState(false);
+
   return (
     <div
       style={{
@@ -54,6 +56,15 @@ const SignUp = () => {
         transform: 'translateX(-5%) translateY(15%)',
       }}
     >
+      <Card  style={{ maxWidth: 550, width: '100%', 
+         background: isCardHovered ? '#f8f9fa' : '#ffffff', // Change card background on hover
+         transition: 'background-color 0.3s', // Smooth transition for the card background color
+         transform: 'translateX(10%) translateY(-5%)',
+
+       }}
+       onMouseEnter={() => setIsCardHovered(true)} // Set hover state on mouse enter
+       onMouseLeave={() => setIsCardHovered(false)} // Reset hover state on mouse leave
+       >
       <Form
         name="basic"
         labelCol={{
@@ -65,6 +76,7 @@ const SignUp = () => {
         style={{
           maxWidth: 600,
           width: '100%',
+          transform: 'translateX(-10%) translateY(20%)',
         }}
         initialValues={{
           remember: true,
@@ -76,8 +88,9 @@ const SignUp = () => {
         <h2
           style={{
             alignItems: 'center',
-            transform: 'translateX(60%) translateY(-60%)',
-            fontSize: 25,
+            transform: 'translateX(50%) translateY(-100%)',
+            fontSize: 30,
+            fontFamily:'sans-serif'
           }}
         >
           Sign Up
@@ -133,7 +146,7 @@ const SignUp = () => {
           <Checkbox
             style={{
               textAlign: 'center',
-              transform: 'translateX(100%)',
+              transform: 'translateX(70%)',
             }}
           >
             Remember me
@@ -160,7 +173,7 @@ const SignUp = () => {
                 margin: 0,
                 position: 'absolute',
                 top: '1%',
-                transform: 'translateX(200%)',
+                transform: 'translateX(150%)',
               }}
             >
               Submit
@@ -168,6 +181,7 @@ const SignUp = () => {
           </div>
         </Form.Item>
       </Form>
+      </Card>
     </div>
   );
 };
