@@ -9,20 +9,21 @@ from flask_cors import CORS
 mydb = mysql.connector.connect(
     host="127.0.0.1",
     user="root",
-    password="",
+    password="0802",
     database="parking"
 )
 
 app = Flask(__name__)
 app.secret_key = "key" 
-CORS(app)
-
 cursor = mydb.cursor()
 
-cursor.execute(create_user_table)
-cursor.execute(create_cars_table) 
-cursor.execute(create_parking_history_table)
-cursor.execute(create_subscription_table)
+
+CORS(app)
+
+# cursor.execute(create_user_table)
+# cursor.execute(create_cars_table)
+# cursor.execute(create_parking_history_table)
+# cursor.execute(create_subscription_table)
 
 mydb.commit()
 
@@ -30,9 +31,6 @@ mydb.commit()
 @app.route("/memebrers")
 def members():
     return {"members": ["Member1", "Member2", "Member3"]}
-
-
-
 
 
 @app.route("/signin", methods=["POST"])
@@ -64,7 +62,6 @@ def login():
         return jsonify({"message": "Invalid credentials"}), 401
 
 
-
 @app.route("/signup", methods=["POST"])
 def signup():
     data = request.get_json()
@@ -86,6 +83,7 @@ def signup():
     mydb.commit()
 
     return jsonify({"message": "Signup successful"}), 201  # 201 Created
+
 
 '''@app.route('/test', methods=['GET'])
 def test():
@@ -175,12 +173,13 @@ def subscribe(user_id):
     mydb.commit()
 
     return jsonify({"message": "Subscription successful"}), 201  # Created
+
+
 @app.route("/admin")
 def admin_dashboard():
     return jsonify({"message": "Welcome to the admin dashboard"})
 
 @app.route("/addbadge", methods=["POST"])
-
 def add_badge():
     data = request.get_json()
 
@@ -188,26 +187,29 @@ def add_badge():
     id_card = data.get("idCard")
     end_date_str = data.get("end_date")
     user_id = data.get("user_id")
-    end_date_str = data.get("end_date")
 
     # Check if the idCard already exists
-    check_query = "SELECT * FROM subscription WHERE idCard = %s"
-    cursor.execute(check_query, (id_card,))
-    existing_card = cursor.fetchone()
+    check_query = "SELECT * FROM cars WHERE car_id = %s"
+    cursor.execute(check_query, (car_id,))
+    existing_car = cursor.fetchone()
 
-    if existing_card:
+    if existing_car:
         return jsonify({"message": "Badge with this ID already exists"}), 400  # Bad Request
     
-    # Parse the end_date string to a datetime object
+    # Insert the car into the "cars" table
+    insert_car_query = "INSERT INTO cars (car_id, car_owner_id) VALUES (%s, %s)"
+    cursor.execute(insert_car_query, (car_id, user_id))
+    
+     # Parse the end_date string to a datetime object
     end_date = datetime.datetime.strptime(end_date_str, "%Y-%m-%d")
-
+    
     # Insert the subscription into the "subscription" table
     insert_subscription_query = "INSERT INTO subscription (car_id, idCard, end_date) VALUES (%s, %s, %s)"
     cursor.execute(insert_subscription_query, (car_id, id_card, end_date))
 
     # Update the user's role to "Admin" (assuming user_id is the user you want to promote)
-    update_user_query = "UPDATE users SET role = %s WHERE user_id = %s"
-    cursor.execute(update_user_query, ("Admin", user_id))
+    #! update_user_query = "UPDATE users SET role = %s WHERE user_id = %s"
+    #! cursor.execute(update_user_query, ("Admin", user_id))
 
     mydb.commit()
 
@@ -216,9 +218,9 @@ def add_badge():
 @app.route("/getallusers", methods=["GET"])
 def get_all_users():
     # Fetch all users from the database
-    query = "SELECT username FROM users"
+    query = "SELECT user_id, username FROM users"
     cursor.execute(query)
-    users = [row[0] for row in cursor.fetchall()]
+    users = [{"user_id": row[0], "username": row[1]} for row in cursor.fetchall()]
 
     return jsonify({"users": users})
 
@@ -242,6 +244,8 @@ def historique(idCard):
     else:
         return jsonify({"message": f"Car ID {idCard} not found in subscriptions"}), 404  # Not Found
     
+    
+
     
 if __name__ == "__main__": 
     app.run(debug=True, host="0.0.0.0", port=5000)

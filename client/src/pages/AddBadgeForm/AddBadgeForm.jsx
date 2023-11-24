@@ -1,12 +1,14 @@
 // src/components/AddBadgeForm.js
 import  { useState, useEffect } from 'react';
 import { Input, Button, DatePicker,Form, Select } from 'antd';
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> fe4db40b8a12aa075910be8b0f3a9a77710e873c
 import axios from 'axios';
 
 const { Option } = Select;
-
 const AddBadgeForm = () => {
   const [formData, setFormData] = useState({
     car_id: '',
@@ -35,7 +37,6 @@ const AddBadgeForm = () => {
   
     fetchUsers();
   }, []);
-  
 
   const handleChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
@@ -46,24 +47,23 @@ const AddBadgeForm = () => {
   };
   const handleSubmit = async () => {
     try {
-      const response =await axios.post(`http://127.0.0.1:5000/addbadge`, formData, {
+      const response = await axios.post('http://127.0.0.1:5000/addbadge', formData, {
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:5173',
         },
-        body: JSON.stringify(formData),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         console.log(data);
       } else {
-        console.error('Failed to add badge');
+        console.error('Failed to add badge. Server response:', response);
       }
     } catch (error) {
       console.error('Error:', error);
     }
   };
+  
 
   return (
     <div>
@@ -75,7 +75,7 @@ const AddBadgeForm = () => {
         <Form.Item label="ID Card" name="idCard" >
           <Input onChange={(e) => handleChange('idCard', e.target.value)} />
         </Form.Item>
-        <Form.Item name="end_date" label="End Date" rules={[{ required: true, message: 'Please select a user' }]}>
+        <Form.Item name="end_date" label="End Date" rules={[{ required: true, message: 'Please select a date' }]}>
         <DatePicker style={{ width: '100%' }} onChange={handleDateChange}  />
       </Form.Item>
         <Form.Item label="Select User" name="user_id" rules={[{ required: true, message: 'Please select a user' }]}>
@@ -84,8 +84,8 @@ const AddBadgeForm = () => {
             placeholder="Select a user"
           >
             {users.map((user) => (
-              <Option key={user} value={user}>
-                {user}
+              <Option key={user.user_id} value={user.user_id}>
+                {user.username}
               </Option>
             ))}
           </Select>
