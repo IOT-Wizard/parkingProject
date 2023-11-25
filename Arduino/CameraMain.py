@@ -2,7 +2,6 @@ import time
 import cv2
 from PIL import Image
 from pytesseract import pytesseract
-import serial
 import datetime
 from flask import Flask
 
@@ -11,7 +10,7 @@ import mysql.connector
 mydb = mysql.connector.connect(
     host="127.0.0.1",
     user="root",
-    password="0802",
+    password="",
     database="parking"
 )
 
@@ -23,7 +22,7 @@ app = Flask(__name__)
 # ser = serial.Serial('COM1', 9600)
 
 try:
-    camera = cv2.VideoCapture(1)
+    camera = cv2.VideoCapture(0 )
     while True:
         _, image = camera.read()
 

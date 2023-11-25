@@ -1,11 +1,9 @@
 // src/components/AddBadgeForm.js
 import  { useState, useEffect } from 'react';
-import { Input, Button, DatePicker,Form, Select } from 'antd';
-<<<<<<< HEAD
-=======
+
+import { Input, Button, DatePicker,Form, Select, Card } from 'antd';
 
 
->>>>>>> fe4db40b8a12aa075910be8b0f3a9a77710e873c
 import axios from 'axios';
 
 const { Option } = Select;
@@ -64,10 +62,28 @@ const AddBadgeForm = () => {
     }
   };
   
+  const [isCardHovered, setIsCardHovered] = useState(false);
 
   return (
-    <div>
-      <h2>Add Badge</h2>
+    <div
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+      transform: 'translateX(-5%) translateY(15%)',
+    }}
+    >
+       <Card title="Add Badge" 
+       style={{ 
+        width: 400,
+        background: isCardHovered ? '#f8f9fa' : '#ffffff', // Change card background on hover
+        transition: 'background-color 0.3s', // Smooth transition for the card background color
+        transform: 'translateX(10%) translateY(-25%)',
+      }}
+      onMouseEnter={() => setIsCardHovered(true)} // Set hover state on mouse enter
+      onMouseLeave={() => setIsCardHovered(false)} // Reset hover state on mouse leave
+       >
       <Form onFinish={handleSubmit}>
         <Form.Item label="Car ID" name="car_id" rules={[{ required: true, message: 'Please enter Car ID' }]}>
           <Input onChange={(e) => handleChange('car_id', e.target.value)} />
@@ -91,11 +107,19 @@ const AddBadgeForm = () => {
           </Select>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit"
+          style={{
+            margin: 0,
+            position: 'absolute',
+            top: '1%',
+            transform: 'translateX(150%)',
+          }}
+          >
             Submit
           </Button>
         </Form.Item>
       </Form>
+      </Card>
     </div>
   );
 };

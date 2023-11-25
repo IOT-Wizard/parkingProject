@@ -9,10 +9,7 @@ import SignIn from "./pages/signIn/signIn";
 import Profile from "./pages/profile/profile";
 import Rapport from "./pages/rapport/rapport";
 import Subscribe from "./pages/Subscribe/Subscribe";
-<<<<<<< HEAD
-=======
 import Home from "./pages/home/home";
->>>>>>> fe4db40b8a12aa075910be8b0f3a9a77710e873c
 import Admin from "./pages/Admin/Admin";
 import AddBadgeForm from "./pages/AddBadgeForm/AddBadgeForm";
 
@@ -62,31 +59,13 @@ function App() {
         },{
           path: "/admin",
           element: <Admin />,
-<<<<<<< HEAD
-        },
-      ],
-    },
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        {
-          path: "/admin", // Default route for /admin
-          element: <Admin />,
-        },
-        {
-=======
         },{
->>>>>>> fe4db40b8a12aa075910be8b0f3a9a77710e873c
           path: "/addbadge",
           element: <AddBadgeForm />,
         },
       ],
-<<<<<<< HEAD
     },
-=======
-    }
->>>>>>> fe4db40b8a12aa075910be8b0f3a9a77710e873c
+    
   ]);
 
   return <RouterProvider router={router} />;
