@@ -1,5 +1,5 @@
 import datetime
-from flask import Flask, jsonify, request, session , make_response
+from flask import Flask, jsonify, render_template, request, session , make_response
 import mysql.connector
 from tables import create_user_table , create_cars_table , create_parking_history_table , create_subscription_table
 from flask_cors import CORS
@@ -13,7 +13,8 @@ mydb = mysql.connector.connect(
     database="parking"
 )
 
-app = Flask(__name__)
+#app = Flask(__name__)
+app = Flask(__name__,static_folder='static',template_folder='template')
 app.secret_key = "key" 
 cursor = mydb.cursor()
 
@@ -31,6 +32,10 @@ mydb.commit()
 @app.route("/memebrers")
 def members():
     return {"members": ["Member1", "Member2", "Member3"]}
+
+@app.route('/')
+def index() :
+   return render_template("index.html")
 
 
 @app.route("/signin", methods=["POST"])
@@ -245,6 +250,7 @@ def historique(idCard):
         return jsonify({"message": f"Car ID {idCard} not found in subscriptions"}), 404  # Not Found
     
     
+
 
     
 if __name__ == "__main__": 

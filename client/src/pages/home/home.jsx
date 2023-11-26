@@ -1,6 +1,7 @@
 //import React from "react";
 import "./home.scss";
 //import Head from 'next/head'
+
 import {
   Box,
   Heading,
@@ -13,6 +14,7 @@ import {
   createIcon,
 } from '@chakra-ui/react'
 import { Link } from "react-router-dom";
+
 
 const Arrow = createIcon({
   displayName: 'Arrow',
