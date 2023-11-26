@@ -16,7 +16,7 @@ mydb = mysql.connector.connect(
 app = Flask(__name__)
 cursor = mydb.cursor()
 
-#ser = serial.Serial('COM9', 9600) 
+ser = serial.Serial('COM9', 9600) 
 
 print("CTRL + C pour arrêter")
 
@@ -45,20 +45,20 @@ while True :
                     insert_query = "INSERT INTO parking_history (car_id, event) VALUES (%s, 'exit')"
                     cursor.execute(insert_query, (car_data['car_id'],))
                     mydb.commit()
-                    #ser.write(b'1')  # You might want to send a different signal here
+                    ser.write(b'1')  # You might want to send a different signal here
                 if last_event and (last_event[0] == 'exit' or last_event[0] == '' ):
                     # If the last event was 'exit' or there was no event, insert a new 'enter' event
                     insert_query = "INSERT INTO parking_history (car_id, event) VALUES (%s, 'enter')"
                     cursor.execute(insert_query, (car_data['car_id'],))
                     mydb.commit()
-                    #ser.write(b'1')
+                    ser.write(b'1')
                     
         else:
-            #ser.write(b'-1')
+            ser.write(b'-1')
             print("sans abb")
 
     else:
-       # ser.write(b'0')
+       ser.write(b'0')
        print("does not exist")
        
     # if car:
