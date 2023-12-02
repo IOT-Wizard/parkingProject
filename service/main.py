@@ -177,7 +177,7 @@ def subscribe(user_id):
     end_date = datetime.datetime.strptime(end_date_str, "%Y-%m-%d")
 
     # Insert the subscription into the "subscriptions" table
-    insert_subscription_query = "INSERT INTO subscription (car_id, end_date) VALUES (%s, %s)"
+    insert_subscription_query = "INSERT INTO subscription (car_id, end_date , idCard) VALUES (%s, %s, '_ ')"
     cursor.execute(insert_subscription_query, (car_id, end_date))
 
     mydb.commit()
@@ -213,7 +213,7 @@ def add_badge():
     end_date = datetime.datetime.strptime(end_date_str, "%Y-%m-%d")
     
     # Insert the subscription into the "subscription" table
-    insert_subscription_query = "INSERT INTO subscription (car_id, idCard, end_date) VALUES (%s, ' ', %s)"
+    insert_subscription_query = "INSERT INTO subscription (car_id, idCard, end_date) VALUES (%s, '_', %s)"
     cursor.execute(insert_subscription_query, (car_id, end_date))
 
 
