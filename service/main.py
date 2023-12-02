@@ -1,5 +1,5 @@
 import datetime
-from flask import Flask, jsonify, render_template, request, session , make_response
+from flask import Flask, jsonify, render_template, request, session , make_response, send_from_directory
 import mysql.connector
 from tables import create_user_table , create_cars_table , create_parking_history_table , create_subscription_table
 from flask_cors import CORS
@@ -38,6 +38,11 @@ def members():
 @app.route('/')
 def index() :
    return render_template("index.html")
+
+@app.route('/<path:filename>')
+def serve_static(filename) :
+   return render_template("index.html")
+
 
 
 @app.route("/signin", methods=["POST"])
