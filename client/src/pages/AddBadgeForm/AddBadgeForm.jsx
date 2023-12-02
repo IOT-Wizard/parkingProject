@@ -10,7 +10,6 @@ const { Option } = Select;
 const AddBadgeForm = () => {
   const [formData, setFormData] = useState({
     car_id: '',
-    idCard: '',
     end_date: '',
     user_id: '', // Assuming you have a way to get the user_id
   });
@@ -88,9 +87,7 @@ const AddBadgeForm = () => {
         <Form.Item label="Car ID" name="car_id" rules={[{ required: true, message: 'Please enter Car ID' }]}>
           <Input onChange={(e) => handleChange('car_id', e.target.value)} />
         </Form.Item>
-        <Form.Item label="ID Card" name="idCard" >
-          <Input onChange={(e) => handleChange('idCard', e.target.value)} />
-        </Form.Item>
+        
         <Form.Item name="end_date" label="End Date" rules={[{ required: true, message: 'Please select a date' }]}>
         <DatePicker style={{ width: '100%' }} onChange={handleDateChange}  />
       </Form.Item>

@@ -95,7 +95,7 @@ const SignIn = () => {
             fontFamily:'sans-serif'
           }}
         >
-          Login
+          Log In
         </h2>
 
        

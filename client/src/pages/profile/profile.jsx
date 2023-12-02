@@ -13,17 +13,17 @@ const Profile = () => {
       height: '100vh', // Set the height of the container to full viewport height
       }}>
       <Card 
-        title={`Bienvenue, ${currentUser.username}`}
+        title={`Welcome, ${currentUser.username}`}
         style={{ 
           width: '50%', // Adjust the width as needed
           textAlign: 'center', // Center the content inside the card
         }}
         >
         <Button type="primary" style={{ marginRight: '10px' }}>
-          <Link to="/rapport">Rapport</Link>
+          <Link to="/rapport">Report</Link>
         </Button>
         <Button type="primary">
-          <Link to="/abonnement">Abonnement</Link>
+          <Link to="/abonnement"> add subscription</Link>
         </Button>
       </Card>
     </div>

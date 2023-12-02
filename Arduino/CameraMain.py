@@ -30,7 +30,7 @@ ser = serial.Serial('COM9', 9600)
 # 2: exit
 
 try:
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(1)
     while True:
         _, image = camera.read()
 

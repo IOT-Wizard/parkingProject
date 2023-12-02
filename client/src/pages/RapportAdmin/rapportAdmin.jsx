@@ -5,8 +5,8 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 
-const Rapport = () => {
-  const [rapport, setRapport] = useState([]);
+const RapportAdmin = () => {
+  const [RapportAdmin, setRapportAdmin] = useState([]);
   const [loading, setLoading] = useState(true);
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
   const userId = currentUser.user_id;
@@ -15,8 +15,8 @@ const Rapport = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:5000/rapport/${userId}`);
-        setRapport(response.data);
+        const response = await axios.get(`http://127.0.0.1:5000/rapportAdmin`);
+        setRapportAdmin(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération du rapport', error);
       } finally {
@@ -40,11 +40,16 @@ const Rapport = () => {
       const imgx = (pdfWidth - imgWidth * ratio) / 2;
       const imgy = 30;
       pdf.addImage(imgData, 'PNG', imgx, imgy, imgWidth * ratio, imgHeight * ratio);
-      pdf.save('Report.pdf');
+      pdf.save('RapportAdmin.pdf');
     });
   };
 
   const columns = [
+    {
+      title: <strong>Usrname</strong>,
+      dataIndex: 'username',
+      key: 'username',
+    },
     {
       title: <strong>Car ID</strong>,
       dataIndex: 'car_id',
@@ -74,8 +79,8 @@ const Rapport = () => {
         }}
         ref={pdfRef}
       >
-        <h2 style={{ marginBottom: '20px', textAlign: 'center', fontWeight: 'bold', fontSize: '24px'}}>Report</h2>
-        <Table dataSource={rapport} columns={columns} loading={loading} />
+        <h1 style={{ marginBottom: '30px', textAlign: 'center', fontWeight: 'bold' , fontSize: '24px' }}>Report</h1>
+        <Table dataSource={RapportAdmin} columns={columns} loading={loading} />
       </div>
       <div style={{ textAlign: 'center' }}>
         {/* <button
@@ -100,4 +105,4 @@ const Rapport = () => {
   );
 };
 
-export default Rapport;
+export default RapportAdmin;

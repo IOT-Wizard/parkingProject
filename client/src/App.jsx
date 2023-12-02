@@ -10,8 +10,9 @@ import Profile from "./pages/profile/profile";
 import Rapport from "./pages/rapport/rapport";
 import Subscribe from "./pages/Subscribe/Subscribe";
 import Home from "./pages/home/home";
-import Admin from "./pages/Admin/Admin";
+import Admin from "./pages/admin/admin";
 import AddBadgeForm from "./pages/AddBadgeForm/AddBadgeForm";
+import RapportAdmin from "./pages/RapportAdmin/rapportAdmin";
 
 
 function App() {
@@ -62,6 +63,9 @@ function App() {
         },{
           path: "/addbadge",
           element: <AddBadgeForm />,
+        },{
+          path: "/RapportAdmin",
+          element: <RapportAdmin />,
         },
       ],
     },

@@ -12,17 +12,17 @@ const Admin = () => {
       alignItems: 'center',
       height: '100vh', // Set the height of the container to full viewport height
     }}>
-      <Card title={`Bienvenue, ${currentUser.username}`}
+      <Card title={`Welcome, ${currentUser.username}`}
       style={{ 
         width: '50%', // Adjust the width as needed
         textAlign: 'center', // Center the content inside the card
       }}
       >
         <Button type="primary" style={{ marginRight: '10px' }}>
-          <Link to="/rapport">Rapport</Link>
+          <Link to="/RapportAdmin">Report </Link>
         </Button>
         <Button type="primary">
-          <Link to="/addbadge">AddBadge</Link>
+          <Link to="/addbadge">Add subscription</Link>
         </Button>
       </Card>
     </div>

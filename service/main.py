@@ -15,8 +15,8 @@ mydb = mysql.connector.connect(
     database="parking"
 )
 
-#app = Flask(__name__)
-app = Flask(__name__,static_folder='static',template_folder='template')
+app = Flask(__name__)
+# app = Flask(__name__,static_folder='static',template_folder='template')
 app.secret_key = "key" 
 cursor = mydb.cursor()
 
@@ -35,13 +35,13 @@ mydb.commit()
 def members():
     return {"members": ["Member1", "Member2", "Member3"]}
 
-@app.route('/')
-def index() :
-   return render_template("index.html")
+# @app.route('/')
+# def index() :
+#    return render_template("index.html")
 
-@app.route('/<path:filename>')
-def serve_static(filename) :
-   return render_template("index.html")
+# @app.route('/<path:filename>')
+# def serve_static(filename) :
+#    return render_template("index.html")
 
 
 
@@ -108,32 +108,6 @@ def logout():
     session.clear()
     return "User has been logged out."
 
-# @app.route("/rapport/<int:user_id>", methods=["GET"])
-# def rapport():
-#     # Assurez-vous que l'utilisateur est connecté
-#     if 'user_id' not in session:
-#         return jsonify({"message": "Utilisateur non connecté"}), 401  # Unauthorized
-
-#     user_id = session['user_id']
-
-#     query = """
-#         SELECT c.car_id, h.event, h.timestamp
-#         FROM parking_history h
-#         JOIN cars c ON h.car_id = c.car_id
-#         JOIN users u ON c.car_owner_id = u.user_id
-#         WHERE u.user_id = %s;
-#     """
-    
-#     #cursor.execute(query, (user_id,))
-#     # Exécutez la requête
-#     cursor.execute(query, (user_id,))
-#     result = cursor.fetchall()
-
-#     # Transformez les résultats en un format JSON
-#     rapport_json = [{"car_id": row[0], "event": row[1], "timestamp": row[2]} for row in result]
-
-#     # Renvoyez la réponse JSON
-#     return jsonify(rapport_json)
 
 @app.route("/rapport/<int:user_id>", methods=["GET"])
 def rapport(user_id):
@@ -155,6 +129,30 @@ def rapport(user_id):
     rapport_json = [{"car_id": row[0], "event": row[1], "timestamp": row[2]} for row in result]
 
     return jsonify(rapport_json)
+
+
+
+
+@app.route("/rapportAdmin", methods=["GET"])
+def rapportAdmin():
+   
+    query = """
+        SELECT  u.username, c.car_id,  h.event, h.timestamp
+        FROM parking_history h
+        JOIN cars c ON h.car_id = c.car_id
+        JOIN users u ON c.car_owner_id = u.user_id
+    """
+    
+    cursor.execute(query,)
+    result = cursor.fetchall()
+
+    rapport_json = [{"username": row[0], "car_id": row[1], "event": row[2], "timestamp": row[3]} for row in result]
+
+    return jsonify(rapport_json)
+
+
+
+
 
 
 @app.route("/subscribe/<int:user_id>", methods=["POST"])
@@ -196,7 +194,6 @@ def add_badge():
     data = request.get_json()
 
     car_id = data.get("car_id")
-    id_card = data.get("idCard")
     end_date_str = data.get("end_date")
     user_id = data.get("user_id")
 
@@ -216,12 +213,10 @@ def add_badge():
     end_date = datetime.datetime.strptime(end_date_str, "%Y-%m-%d")
     
     # Insert the subscription into the "subscription" table
-    insert_subscription_query = "INSERT INTO subscription (car_id, idCard, end_date) VALUES (%s, %s, %s)"
-    cursor.execute(insert_subscription_query, (car_id, id_card, end_date))
+    insert_subscription_query = "INSERT INTO subscription (car_id, idCard, end_date) VALUES (%s, ' ', %s)"
+    cursor.execute(insert_subscription_query, (car_id, end_date))
 
-    # Update the user's role to "Admin" (assuming user_id is the user you want to promote)
-    #! update_user_query = "UPDATE users SET role = %s WHERE user_id = %s"
-    #! cursor.execute(update_user_query, ("Admin", user_id))
+
 
     mydb.commit()
 

@@ -51,7 +51,7 @@ while True :
                     insert_query = "INSERT INTO parking_history (car_id, event) VALUES (%s, 'enter')"
                     cursor.execute(insert_query, (car_data['car_id'],))
                     mydb.commit()
-                    ser.write(b'1')
+                    ser.write(b'2')
                     
         else:
             ser.write(b'-1')
