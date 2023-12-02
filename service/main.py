@@ -16,7 +16,7 @@ mydb = mysql.connector.connect(
 )
 
 app = Flask(__name__)
-# app = Flask(__name__,static_folder='static',template_folder='template')
+app = Flask(__name__,static_folder='static',template_folder='template')
 app.secret_key = "key" 
 cursor = mydb.cursor()
 
@@ -35,13 +35,13 @@ mydb.commit()
 def members():
     return {"members": ["Member1", "Member2", "Member3"]}
 
-# @app.route('/')
-# def index() :
-#    return render_template("index.html")
+@app.route('/')
+def index() :
+    return render_template("index.html")
 
-# @app.route('/<path:filename>')
-# def serve_static(filename) :
-#    return render_template("index.html")
+@app.route('/<path:filename>')
+def serve_static(filename) :
+    return render_template("index.html")
 
 
 
@@ -64,7 +64,7 @@ def login():
             "user_id": user[0],
             "full_name": user[1],
             "username": user[2],
-            "role":user[3],
+            "role":user[4],
         }
         session['user_id'] = user[0]
         # Authentication successful

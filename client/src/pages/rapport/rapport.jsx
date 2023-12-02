@@ -1,4 +1,4 @@
-import  { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Table ,FloatButton } from 'antd';
 import jsPDF from 'jspdf';
@@ -40,23 +40,23 @@ const Rapport = () => {
       const imgx = (pdfWidth - imgWidth * ratio) / 2;
       const imgy = 30;
       pdf.addImage(imgData, 'PNG', imgx, imgy, imgWidth * ratio, imgHeight * ratio);
-      pdf.save('Report.pdf');
+      pdf.save('rapport.pdf');
     });
   };
 
   const columns = [
     {
-      title: <strong>Car ID</strong>,
+      title: 'Car ID',
       dataIndex: 'car_id',
       key: 'car_id',
     },
     {
-      title: <strong>Event</strong>,
+      title: 'Event',
       dataIndex: 'event',
       key: 'event',
     },
     {
-      title: <strong>Timestamp</strong>,
+      title: 'Timestamp',
       dataIndex: 'timestamp',
       key: 'timestamp',
     },
@@ -74,7 +74,7 @@ const Rapport = () => {
         }}
         ref={pdfRef}
       >
-        <h2 style={{ marginBottom: '20px', textAlign: 'center', fontWeight: 'bold', fontSize: '24px'}}>Report</h2>
+        <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>Rapport</h2>
         <Table dataSource={rapport} columns={columns} loading={loading} />
       </div>
       <div style={{ textAlign: 'center' }}>

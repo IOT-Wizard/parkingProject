@@ -73,7 +73,7 @@ const AddBadgeForm = () => {
       transform: 'translateX(-5%) translateY(15%)',
     }}
     >
-       <Card title="Add Badge" 
+       <Card title="Add subscription" 
        style={{ 
         width: 400,
         background: isCardHovered ? '#f8f9fa' : '#ffffff', // Change card background on hover

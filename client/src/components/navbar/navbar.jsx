@@ -16,6 +16,7 @@ const Navbar = () => {
   //const navigate = useNavigate(); 
   const { pathname } = useLocation();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const UserRole = JSON.parse(localStorage.getItem("UserRole"));
 
   
   
@@ -60,24 +61,38 @@ const Navbar = () => {
     {
       key: '1',
       label: (
-        <Link to="/rapport" className="link">
-          <span>Rapport</span>
-        </Link>
+        (UserRole === 'admin') ? (
+          <Link to="/RapportAdmin" className="link">
+            <span>Report</span>
+          </Link>
+        ) : (
+          <Link to="/rapport" className="link">
+            <span>Report</span>
+          </Link>
+        )
       ),
     },
     {
       key: '2',
       label: (
-        <Link to="/abonnement">
-          <span>Abonnement</span>
-        </Link>
+        (UserRole === 'admin') ? (
+          <Link to="/addbadge" className="link">
+            <span>subscription</span>
+          </Link>
+        ) : (
+          <Link to="/abonnement" className="link">
+            <span>subscription</span>
+          </Link>
+        )
+        
       ),
     },
     {
       key: '3',
       label: (
+
         <Link to="/" onClick={handleLogout} className="link">
-          <span>Déconnexion</span>
+          <span>Log out</span>
         </Link>
       ),
     }

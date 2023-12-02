@@ -18,6 +18,7 @@ const SignIn = () => {
   
       if (response.ok) {
         localStorage.setItem("currentUser", JSON.stringify(data.user));
+        localStorage.setItem("UserRole", JSON.stringify(data.user.role));
         console.log('Success:',data);
         console.log('ID:',data.user.user_id);
 
