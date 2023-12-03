@@ -47,12 +47,12 @@ const RapportAdmin = () => {
   const columns = [
     {
       title: <strong>Usrname</strong>,
-      dataIndex: 'username',
+      dataIndex:  'username',
       key: 'username',
     },
     {
       title: <strong>Car ID</strong>,
-      dataIndex: 'car_id',
+      dataIndex:  'car_id' ,
       key: 'car_id',
     },
     {
